@@ -1,0 +1,24 @@
+<div class='row'>
+    <div class="page-header text-center">
+      <h3><i class="fa fa-book"></i> Books Borrowed:  <span class="badge">{{ borrowedBooks ? borrowedBooks.length : 0 }}</span></h3>
+    </div>
+    <div class='col-xs-12'>
+      <div class='row'>    
+        <div class="col-xs-6 col-sm-4" ng-repeat='book in borrowedBooks'>
+              <div class="thumbnail">
+                <img ng-src="{{ book.imgUrl }}" alt="{{ book.name }}">
+                <div class="caption">
+                  <h4>{{ book.name }}</h4>
+                  <p><strong>Owner:</strong> <br>{{ book.owner_name}} </p>
+                  <buttton class="btn btn-block btn-warning" role="button" ng-click='returnBook(book)'>Return</button>
+                </div>
+                  
+                  <div ng-if='book.returnBookToOnwer == true' class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Please</strong> Return book to the owner as soon as posible. 
+                  </div>              
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

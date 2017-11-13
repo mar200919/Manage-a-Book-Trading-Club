@@ -1,0 +1,16 @@
+$signature-bg: linear-gradient(to bottom, #45484d 0%,#000000 100%);
+
+body {
+    background-image: url('../images/upfeathers.png');
+    .row-signature {
+        padding: 1%;
+        background: $signature-bg;
+        p {
+          font-weight: bold;
+          color: white;
+          text-align: center;
+          width: 100%;
+          margin-bottom:0;
+        }
+    } 
+}

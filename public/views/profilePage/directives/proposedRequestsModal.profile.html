@@ -1,0 +1,29 @@
+<div class="modal fade" tabindex="-1" role="dialog" id='proposedRequests'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Proposed Requests</h4>
+      </div>
+      <div class="modal-body">
+        <div class='row'>
+          <div class="col-xs-6 col-sm-4" ng-repeat='request in $parent.currentUser().pendingRequestsToUsers'>
+            <div class="thumbnail">
+              <img ng-src="{{request.book.imgUrl}}" alt="{{request.book.name}}">
+              <div class="caption">
+                <h4>{{request.book.name}}</h4>
+                <p><strong>Owner:</strong> <br>{{request.book.owner_name}}</p>
+                <p class='text-warning'>Status: {{request.status}}</p>
+                <p ng-if='request.reasonForDecline'>Reason: </p>
+                <buttton class="btn btn-danger btn-block" role="button" ng-click='cancelRequest(request, $parent.currentUser())'>{{ removeOrCancel(request) }}</button>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

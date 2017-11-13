@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html ng-app='BookTradingClub'>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/css/style.css' />
+    <script src="/js/main.js"></script>
+  </head>
+  <body ng-controller='BookTradingClubController'>
+  <div class='container-fluid'>
+    <div class="row row-signature">
+      <div class="col-xs-12 text-center">
+        <p><i class="fa fa-code"></i> By Ulises Cabrera - April 2016</p>
+      </div>
+    </div><!---row___signature--->   
+  </div>
+    <nav class="navbar navbar-default navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#/"><%= title %></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a  href='#/profile/{{ currentUser()._id }}' ng-show='currentUser()'>Profile</a></li>
+            <li><a href='#/books' ng-show='currentUser()'>All Books</a></li>
+            <li><button type="button" data-toggle="modal" data-target=".sign-in-modal" class="btn btn-primary navbar-btn" ng-hide='currentUser()'>Sign in</button>
+            <button ng-click='signOut()' class="btn btn-danger navbar-btn" ng-show='currentUser()' >Sign out</button></li>
+          </ul>
+          <p ng-show='currentUser()' style='color:white' class="navbar-text navbar-right text-center" ngCloak>Signed in as {{ currentUser().name }}</p>
+        </div>
+
+      </div><!-- /.container-fluid -->
+    </nav>
+    
+    
+    <%if (message != '') { %>
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        message
+      </div>        
+    <% } %>
+    
+    
+    <div class="modal fade sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title text-center">Sign in with:</h3>
+          </div>        
+          <div class="modal-body">
+             <div class="page-header">
+              <h4 class='text-center'>Social Media</h4>
+            </div>       
+            <div class="btn-group btn-group-justified" role="group" aria-label="sign-in-buttons">
+              <div class="btn-group" role="group">
+                <a href='/auth/twitter'class="btn btn-info"><i class="fa fa-twitter"></i> Twitter</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a  href='/auth/facebook' class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
+              </div>
+            </div>
+            <div class="page-header">
+              <h4 class='text-center'>Local Account</h4>
+            </div>            
+            <div>
+            <!-- LOCAL AUTH -->
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="loginHeading">
+                      <h4 class="panel-title text-center">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#login" aria-expanded="true" aria-controls="collapseOne">
+                          Login
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="login" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="loginHeading">
+                      <div class="panel-body">
+                            <form action="/auth/login" method="post">
+                          		<div class="form-group">
+                          			<label for="username" class="sr-only">Username</label>
+                          			<input type="username" name='username' placeholder="Username" class="form-control" required>
+                          		</div>
+                          		<div class="form-group">
+                          			<label for="password" class="sr-only">Password</label>
+                          			<input type="password" name='password' placeholder="Password" class="form-control" required>
+                          		</div>
+                          		<button type="submit" class="btn btn-primary btn-block"/> Login</button>
+                            </form>      
+                        </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="singupHeading">
+                      <h4 class="panel-title text-center">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#singup" aria-expanded="false" aria-controls="collapseTwo">
+                          Sign Up
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="singup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="singupHeading">
+                      <div class="panel-body">
+                            <form action="/auth/signup" method="post">
+                          		<div class="form-group">
+                          			<label for="username" class="sr-only">Username</label>
+                          			<input type="username" name='username' placeholder="Username" class="form-control" required>
+                          		</div>
+                          		<div class="form-group">
+                          			<label for="password" class="sr-only">Password</label>
+                          			<input type="password" name='password' placeholder="Password" class="form-control" required>
+                          		</div>
+                          		<button type="submit" class="btn btn-info btn-block"/> Sign Up</button>
+                            </form>         
+                        </div>
+                    </div>
+                  </div>
+                </div>            
+           <!-- LOCAL AUTH -->
+          </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='container'>
+      <ng-view></ng-view>
+    </div>
+  <script type="text/javascript">
+	  
+	  // fix the facebook url bug
+		if (window.location.hash === '#_=_') window.location.hash = '#';
+		
+		// pass the user object from the server so it can be used by angular
+		window.user = <%- user || 'null' %>;
+		
+	</script>    
+  </body>
+</html>

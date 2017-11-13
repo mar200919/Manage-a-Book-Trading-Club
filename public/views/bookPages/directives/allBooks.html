@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat='book in books'>
+    <div class="thumbnail">
+      <img ng-src="{{book.imgUrl}}" alt="{{book.name}}">
+      <div class="caption">
+        <h3>{{book.name}}</h3>
+        <p>{{book.description}}</p>
+        <p ng-if='book.name'>
+        <button ng-if='book.owner_id != $parent.currentUser()._id' 
+                class="btn" role="button"
+                ng-class='btnClassByStatus(requestStatus($parent.currentUser(), book))'
+                ng-click='requestBook(book, $parent.currentUser())' 
+                ng-disabled="requestStatus($parent.currentUser(), book) == 'Requested' || requestStatus($parent.currentUser(), book) == 'Borrowed' || requestStatus($parent.currentUser(), book) == 'Declined'">{{ requestStatus($parent.currentUser(), book)}}</button> 
+        <button class="btn"
+                ng-class="book.lenders_id.length > 0 ? 'btn-default' : 'btn-danger'"
+                role="button" 
+                ng-if='book.owner_id == $parent.currentUser()._id' 
+                ng-click='deleteBook(book._id, $index)' ng-disabled='book.lenders_id.length > 0'>{{ book.lenders_id.length > 0 ? 'Lended' : 'Delete' }}</button></p>
+      </div>
+    </div>
+  </div>
+</div>
